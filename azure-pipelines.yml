@@ -1,0 +1,19 @@
+
+jobs:
+- job: build
+  pool:
+    vmImage: win1803
+  displayName: Build docker image
+  steps:
+  - script: ./windows/ci/build.ps1
+
+- job: publish
+  pool:
+    vmImage: win1803
+  displayName: Publish image to docker hub
+  dependsOn: build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) # FIXME: use a trigger
+  variables: { group: docker-creds }
+  steps:
+  - script: ./windows/ci/publish.ps1
+
