@@ -8,7 +8,7 @@ jobs:
   variables:
     IMAGE_NAME: 'crates-build-env-windows'
   steps:
-    - pwsh: ./windows/ci/build.ps1
+    - pwsh: Write-Host $(group)
       displayName: Build Docker image
     - pwsh: ./windows/ci/publish.ps1
       displayName: Publish image to Docker Hub
